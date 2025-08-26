@@ -5,9 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
-import com.github.jw010801.smpeconomymod.SmpEconomyMod;
 import com.github.jw010801.smpeconomymod.client.data.ClientPlayerData;
 
 import java.math.BigDecimal;
@@ -72,7 +70,9 @@ public class EconomyHud implements HudRenderCallback {
         TextRenderer textRenderer = client.textRenderer;
         int textColor = (int)(alpha * 0xFF) << 24 | (TEXT_COLOR & 0xFFFFFF);
         
-        // 플레이어 이름 표시 (아이콘으로 최소화 예정)
+        // 플레이어 이름 표시 (아이콘으로 최소화 예정) - NPE 방지
+        if (client.player == null) return;
+        
         String playerName = client.player.getName().getString();
         if (playerName.length() > 12) {
             playerName = playerName.substring(0, 12) + "...";

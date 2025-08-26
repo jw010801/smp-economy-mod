@@ -69,7 +69,7 @@ public class EconomyManager {
                     return rs.getBigDecimal("balance");
                 } else {
                     // 새 플레이어인 경우 기본 잔액으로 계정 생성
-                    createNewAccount(playerUuid, DEFAULT_STARTING_BALANCE);
+                    createNewAccount(playerUuid);
                     return DEFAULT_STARTING_BALANCE;
                 }
             }
@@ -223,17 +223,17 @@ public class EconomyManager {
         }, executor);
     }
     
-    private void createNewAccount(UUID playerUuid, BigDecimal initialBalance) throws SQLException {
+    private void createNewAccount(UUID playerUuid) throws SQLException {
         String insertQuery = "INSERT INTO balances (player_uuid, balance) VALUES (?, ?) ON DUPLICATE KEY UPDATE balance = balance";
         
         try (Connection conn = databaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
             
             stmt.setString(1, playerUuid.toString());
-            stmt.setBigDecimal(2, initialBalance);
+            stmt.setBigDecimal(2, DEFAULT_STARTING_BALANCE);
             stmt.executeUpdate();
             
-            SmpEconomyMod.LOGGER.info("새 계정 생성: {} (초기 잔액: {})", playerUuid, initialBalance);
+            SmpEconomyMod.LOGGER.info("새 계정 생성: {} (초기 잔액: {})", playerUuid, DEFAULT_STARTING_BALANCE);
         }
     }
     

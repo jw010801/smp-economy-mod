@@ -3,7 +3,6 @@ package com.github.jw010801.smpeconomymod.client.network;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.Identifier;
 
 import com.github.jw010801.smpeconomymod.SmpEconomyMod;
 import com.github.jw010801.smpeconomymod.client.data.ClientPlayerData;
@@ -56,9 +55,7 @@ public class ClientNetworkHandler {
             BigDecimal newBalance = new BigDecimal(buf.readString());
             BigDecimal dailyEarnings = new BigDecimal(buf.readString());
             
-            client.execute(() -> {
-                ClientPlayerData.getInstance().updateEconomyData(newBalance, dailyEarnings);
-            });
+            client.execute(() -> ClientPlayerData.getInstance().updateEconomyData(newBalance, dailyEarnings));
         });
         
         // 스킬 업데이트
@@ -67,9 +64,7 @@ public class ClientNetworkHandler {
             int level = buf.readInt();
             long experience = buf.readLong();
             
-            client.execute(() -> {
-                ClientPlayerData.getInstance().updateSkillData(skillType, level, experience);
-            });
+            client.execute(() -> ClientPlayerData.getInstance().updateSkillData(skillType, level, experience));
         });
         
         // 영토 정보 업데이트
@@ -86,9 +81,7 @@ public class ClientNetworkHandler {
             String finalOwnerName = ownerName;
             String finalClaimName = claimName;
             
-            client.execute(() -> {
-                ClientPlayerData.getInstance().updateTerritoryInfo(finalOwnerName, finalClaimName);
-            });
+            client.execute(() -> ClientPlayerData.getInstance().updateTerritoryInfo(finalOwnerName, finalClaimName));
         });
         
         // 알림 메시지
@@ -96,9 +89,7 @@ public class ClientNetworkHandler {
             String message = buf.readString();
             long duration = buf.readLong();
             
-            client.execute(() -> {
-                ClientPlayerData.getInstance().addNotification(message, duration);
-            });
+            client.execute(() -> ClientPlayerData.getInstance().addNotification(message, duration));
         });
     }
     

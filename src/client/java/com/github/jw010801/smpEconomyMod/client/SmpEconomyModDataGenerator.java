@@ -1,4 +1,4 @@
-package com.github.jw010801.smpEconomyMod.client;
+package com.github.jw010801.smpeconomymod.client;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;

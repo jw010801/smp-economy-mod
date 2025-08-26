@@ -30,7 +30,7 @@ public class TerritoryManager {
         this.executor = Executors.newScheduledThreadPool(2);
         
         // 매일 자정에 세금 징수
-        scheduleDaily(() -> collectDailyTaxes(), 0, 0);
+        scheduleDaily(this::collectDailyTaxes);
         
         // 30분마다 캐시 동기화
         this.executor.scheduleAtFixedRate(this::syncCacheToDatabase, 30, 30, TimeUnit.MINUTES);
@@ -169,8 +169,8 @@ public class TerritoryManager {
      */
     private boolean hasOverlappingClaim(String worldName, int minX, int minZ, int maxX, int maxZ) {
         String query = """
-            SELECT COUNT(*) FROM claims 
-            WHERE world_name = ? 
+            SELECT COUNT(*) FROM claims
+            WHERE world_name = ?
             AND NOT (max_x < ? OR min_x > ? OR max_z < ? OR min_z > ?)
             """;
         
@@ -380,11 +380,11 @@ public class TerritoryManager {
         }
     }
     
-    private void scheduleDaily(Runnable task, int hour, int minute) {
+    private void scheduleDaily(Runnable task) {
         Calendar now = Calendar.getInstance();
         Calendar nextRun = Calendar.getInstance();
-        nextRun.set(Calendar.HOUR_OF_DAY, hour);
-        nextRun.set(Calendar.MINUTE, minute);
+        nextRun.set(Calendar.HOUR_OF_DAY, 0); // 자정
+        nextRun.set(Calendar.MINUTE, 0);
         nextRun.set(Calendar.SECOND, 0);
         nextRun.set(Calendar.MILLISECOND, 0);
         

@@ -18,11 +18,9 @@ import net.minecraft.util.math.BlockPos;
 import com.github.jw010801.smpeconomymod.SmpEconomyMod;
 import com.github.jw010801.smpeconomymod.territory.Claim;
 import com.github.jw010801.smpeconomymod.territory.ClaimMember;
-import com.github.jw010801.smpeconomymod.territory.ClaimResult;
 import com.github.jw010801.smpeconomymod.territory.TerritoryManager;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -213,9 +211,8 @@ public class TerritoryCommands {
                 Claim claim = claimOpt.get();
                 
                 // 소유자 이름 조회 (TODO: UUID -> 이름 변환)
-                String ownerName = "알 수 없음"; // claim.getOwnerUuid().toString()의 앞 8자리만
                 String ownerUuid = claim.getOwnerUuid().toString();
-                ownerName = ownerUuid.substring(0, 8) + "...";
+                String ownerName = ownerUuid.substring(0, 8) + "...";
                 
                 player.sendMessage(Text.of("§6🏘️ === 클레임 정보 ==="));
                 player.sendMessage(Text.of(String.format("§f📍 ID: §e%d", claim.getId())));
@@ -224,7 +221,7 @@ public class TerritoryCommands {
                         claim.getMinX(), claim.getMinZ(), claim.getMaxX(), claim.getMaxZ())));
                 player.sendMessage(Text.of(String.format("§f📦 크기: §d%d청크", claim.getChunkCount())));
                 player.sendMessage(Text.of(String.format("§f🕒 생성일: §7%s", 
-                        new java.util.Date(claim.getCreatedAt()).toString())));
+                        new java.util.Date(claim.getCreatedAt()))));
                 
                 // 권한 확인
                 SmpEconomyMod.territoryManager.getPlayerPermission(

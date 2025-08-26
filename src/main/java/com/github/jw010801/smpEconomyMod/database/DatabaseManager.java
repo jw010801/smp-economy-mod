@@ -5,7 +5,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import com.github.jw010801.smpeconomymod.SmpEconomyMod;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -42,6 +41,13 @@ public class DatabaseManager {
     }
     
     private void setupDataSource() {
+        HikariConfig config = createHikariConfig();
+        this.dataSource = new HikariDataSource(config);
+        
+        SmpEconomyMod.LOGGER.info("HikariCP 데이터소스가 설정되었습니다.");
+    }
+    
+    private HikariConfig createHikariConfig() {
         HikariConfig config = new HikariConfig();
         
         // 데이터베이스 연결 설정
@@ -64,9 +70,7 @@ public class DatabaseManager {
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         config.addDataSourceProperty("useServerPrepStmts", "true");
         
-        this.dataSource = new HikariDataSource(config);
-        
-        SmpEconomyMod.LOGGER.info("HikariCP 데이터소스가 설정되었습니다.");
+        return config;
     }
     
     private void createTables() throws SQLException {

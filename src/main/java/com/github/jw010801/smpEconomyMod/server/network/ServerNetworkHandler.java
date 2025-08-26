@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 import com.github.jw010801.smpeconomymod.SmpEconomyMod;
 import com.github.jw010801.smpeconomymod.network.NetworkConstants;
@@ -64,9 +63,8 @@ public class ServerNetworkHandler {
     private static void registerIncomingPackets() {
         // 플레이어 데이터 요청
         ServerPlayNetworking.registerGlobalReceiver(NetworkConstants.REQUEST_PLAYER_DATA, 
-            (server, player, handler, buf, responseSender) -> {
-                server.execute(() -> syncPlayerDataToClient(player));
-        });
+            (server, player, handler, buf, responseSender) -> 
+                server.execute(() -> syncPlayerDataToClient(player)));
         
         // 경제 명령어 처리
         ServerPlayNetworking.registerGlobalReceiver(NetworkConstants.ECONOMY_COMMAND,
@@ -192,9 +190,8 @@ public class ServerNetworkHandler {
             case "balance" -> {
                 if (args.length == 0) {
                     // 자신의 잔액 조회
-                    SmpEconomyMod.economyManager.getBalance(playerUuid).thenAccept(balance -> {
-                        player.sendMessage(Text.of("§6💰 현재 잔액: §e" + formatMoney(balance) + "골드"));
-                    });
+                    SmpEconomyMod.economyManager.getBalance(playerUuid).thenAccept(balance -> 
+                        player.sendMessage(Text.of("§6💰 현재 잔액: §e" + formatMoney(balance) + "골드")));
                 } else {
                     // 다른 플레이어 잔액 조회 (관리자만)
                     if (player.hasPermissionLevel(2)) {

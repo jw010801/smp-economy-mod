@@ -153,10 +153,9 @@ public class EconomyCommands {
         ServerCommandSource source = context.getSource();
         ServerPlayerEntity targetPlayer = EntityArgumentType.getPlayer(context, "player");
         
-        SmpEconomyMod.economyManager.getBalance(targetPlayer.getUuid()).thenAccept(balance -> {
+        SmpEconomyMod.economyManager.getBalance(targetPlayer.getUuid()).thenAccept(balance -> 
             source.sendFeedback(() -> Text.of(String.format("§6💰 %s의 잔액: §e%s골드", 
-                    targetPlayer.getName().getString(), formatMoney(balance))), false);
-        });
+                    targetPlayer.getName().getString(), formatMoney(balance))), false));
         
         return 1;
     }
@@ -192,12 +191,10 @@ public class EconomyCommands {
                         player.getName().getString(), formatMoney(transferAmount))));
                 
                 // 클라이언트 HUD 업데이트
-                SmpEconomyMod.economyManager.getBalance(player.getUuid()).thenAccept(balance -> {
-                    ServerNetworkHandler.syncEconomyDataToClient(player, balance, BigDecimal.ZERO);
-                });
-                SmpEconomyMod.economyManager.getBalance(targetPlayer.getUuid()).thenAccept(balance -> {
-                    ServerNetworkHandler.syncEconomyDataToClient(targetPlayer, balance, BigDecimal.ZERO);
-                });
+                SmpEconomyMod.economyManager.getBalance(player.getUuid()).thenAccept(balance -> 
+                    ServerNetworkHandler.syncEconomyDataToClient(player, balance, BigDecimal.ZERO));
+                SmpEconomyMod.economyManager.getBalance(targetPlayer.getUuid()).thenAccept(balance -> 
+                    ServerNetworkHandler.syncEconomyDataToClient(targetPlayer, balance, BigDecimal.ZERO));
                 
             } else {
                 // 송금 실패 (주로 잔액 부족)
