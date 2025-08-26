@@ -37,6 +37,6 @@
     "java": ">=17"
   },
   "suggests": {
-    "flamingo": "*"
+    "modmenu": "*"
   }
 }

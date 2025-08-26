@@ -1,18 +1,15 @@
 package com.github.jw010801.smpeconomymod.client.hud;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import com.github.jw010801.smpeconomymod.SmpEconomyMod;
 import com.github.jw010801.smpeconomymod.client.data.ClientPlayerData;
 
-import java.awt.*;
 import java.math.BigDecimal;
 
 public class EconomyHud implements HudRenderCallback {
@@ -31,9 +28,9 @@ public class EconomyHud implements HudRenderCallback {
     private static final int GOLD_COLOR = 0xFFFFD700;        // 금색 (골드 표시용)
     
     // Fantasy UI 텍스처 (나중에 추가 예정)
-    private static final Identifier HUD_TEXTURE = new Identifier(SmpEconomyMod.MOD_ID, "textures/gui/hud_background.png");
+    // private static final Identifier HUD_TEXTURE = new Identifier(SmpEconomyMod.MOD_ID, "textures/gui/hud_background.png");
     
-    private MinecraftClient client;
+    private final MinecraftClient client;
     
     public EconomyHud() {
         this.client = MinecraftClient.getInstance();
