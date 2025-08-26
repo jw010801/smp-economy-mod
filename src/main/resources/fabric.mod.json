@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "smp-economy-mod",
+  "version": "${version}",
+  "name": "SMP Economy & Territory Mod",
+  "description": "DB 권위 경제와 영토 시스템, HUD를 통합한 생활·경영 SMP 모드",
+  "authors": ["jw010801"],
+  "contact": {
+    "homepage": "https://github.com/jw010801/smp-economy-mod",
+    "sources": "https://github.com/jw010801/smp-economy-mod"
+  },
+  "license": "MIT",
+  "icon": "assets/smp-economy-mod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.github.jw010801.smpeconomymod.SmpEconomyMod"
+    ],
+    "client": [
+      "com.github.jw010801.smpeconomymod.client.SmpEconomyModClient"
+    ],
+    "server": [
+      "com.github.jw010801.smpeconomymod.server.SmpEconomyModServer"
+    ]
+  },
+  "mixins": [
+    "smp-economy-mod.mixins.json",
+    {
+      "config": "smp-economy-mod.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=17"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
